@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 Hazel Tokyo Trip</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            color: #1e293b;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .nav-btn {
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .nav-btn.active {
+            background: white;
+            color: #1e293b;
+            border-color: white;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 30px 15px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .card h2 {
+            font-size: 1.4em;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #2180a0;
+            color: #1e293b;
+        }
+
+        .step {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f8fafc;
+            border-left: 4px solid #2180a0;
+            border-radius: 6px;
+        }
+
+        .step-time {
+            font-weight: 700;
+            color: #c0152f;
+            font-size: 1em;
+            margin-bottom: 6px;
+        }
+
+        .step-title {
+            font-weight: 600;
+            font-size: 0.95em;
+            margin-bottom: 8px;
+        }
+
+        .step-detail {
+            font-size: 0.9em;
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .highlight {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 16px 0;
+            border-radius: 6px;
+            font-weight: 600;
+            color: #856404;
+        }
+
+        .important {
+            background: #f8d7da;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 16px 0;
+            border-radius: 6px;
+            color: #721c24;
+            font-weight: 600;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 15px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9em;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #2180a0 0%, #1a6a8c 100%);
+            color: white;
+        }
+
+        th {
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tbody tr:hover {
+            background: #f8fafc;
+        }
+
+        .person-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+            flex-wrap: wrap;
+        }
+
+        .person-tab {
+            padding: 10px 14px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: #64748b;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: all 0.3s;
+        }
+
+        .person-tab:hover {
+            color: #1e293b;
+        }
+
+        .person-tab.active {
+            color: #2180a0;
+            border-bottom-color: #2180a0;
+        }
+
+        .person-content {
+            display: none;
+        }
+
+        .person-content.active {
+            display: block;
+        }
+
+        .link-btn {
+            display: inline-block;
+            background: #2180a0;
+            color: white;
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85em;
+            margin: 6px 6px 6px 0;
+            transition: all 0.3s;
+        }
+
+        .link-btn:hover {
+            background: #c0152f;
+            transform: translateY(-2px);
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: white;
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 40px;
+        }
+
+        .info-box {
+            background: #e0f2fe;
+            border-left: 4px solid #0284c7;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 6px;
+            font-size: 0.9em;
+        }
+
+        .line-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75em;
+            font-weight: 700;
+            color: white;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        .jreast { background: #2180a0; }
+        .keisei { background: #EE7F2D; }
+        .shinjansen { background: #1B4D8F; }
+        .tokyometro-h { background: #E74C3C; }
+        .tokyometro-m { background: #6B4C9A; }
+        .osakamet-m { background: #9933FF; }
+
+        .map-btn {
+            display: inline-block;
+            background: #2180a0;
+            color: white;
+            padding: 10px 16px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9em;
+            margin: 6px 6px 6px 0;
+            transition: all 0.3s;
+        }
+
+        .map-btn:hover {
+            background: #1a6a8c;
+            transform: translateY(-2px);
+        }
+
+        .map-btn.active {
+            background: #c0152f;
+        }
+
+        .route-info {
+            background: #f8fafc;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 15px;
+            border: 2px solid #2180a0;
+        }
+
+        .route-info h3 {
+            color: #2180a0;
+            margin-bottom: 15px;
+            font-size: 1.1em;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 1.5em;
+            }
+            .nav-btn {
+                padding: 8px 10px;
+                font-size: 0.8em;
+            }
+            .card {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎂 Hazel 東京 5日完全攻略</h1>
+        <p>✨ 12月9-13日 2025 | 詳盡版 (交通 + 購票 + 行李)</p>
+        <div class="nav-tabs">
+            <button class="nav-btn active" onclick="showTab('overview')">📋 總覽</button>
+            <button class="nav-btn" onclick="showTab('day1')">Day 1</button>
+            <button class="nav-btn" onclick="showTab('day2')">Day 2</button>
+            <button class="nav-btn" onclick="showTab('day3')">Day 3</button>
+            <button class="nav-btn" onclick="showTab('day4')">Day 4</button>
+            <button class="nav-btn" onclick="showTab('day5')">Day 5</button>
+            <button class="nav-btn" onclick="showTab('map')">🗺️ 動線圖</button>
+            <button class="nav-btn" onclick="showTab('luggage')">📦 行李+寄包</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div id="overview" class="section active">
+            <div class="card">
+                <h2>📋 5日行程總覽</h2>
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>日期</th>
+                                <th>主題</th>
+                                <th>核心行程</th>
+                                <th>地鐵卷</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>12/9 (一)</strong></td>
+                                <td>🛫 抵達</td>
+                                <td>成田 → 秋葉原</td>
+                                <td>IC卡</td>
+                            </tr>
+                            <tr>
+                                <td><strong>12/10 (二)</strong></td>
+                                <td>🛍️ 原宿涉谷</td>
+                                <td>SVT Pop-up 12:00</td>
+                                <td>Day 1</td>
+                            </tr>
+                            <tr>
+                                <td><strong>12/11 (三)</strong></td>
+                                <td>🎂 生日</td>
+                                <td>敘敘苑 11:00 / 演唱會 17:30</td>
+                                <td>Day 2</td>
+                            </tr>
+                            <tr>
+                                <td><strong>12/12 (四)</strong></td>
+                                <td>🎨 文青</td>
+                                <td>吉祥寺 → 下北澤 → 池袋</td>
+                                <td>Day 3</td>
+                            </tr>
+                            <tr>
+                                <td><strong>12/13 (五)</strong></td>
+                                <td>✈️ 機場</td>
+                                <td>淺草 → 晴空塔 → 機場</td>
+                                <td>IC卡</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="highlight">
+                    ⭐ 重點倒數: SVT 12:00 | 敘敘苑 11:00 | 演唱會 17:30 | 飛機 20:55
+                </div>
+            </div>
+        </div>
+
+        <div id="day1" class="section">
+            <div class="card">
+                <h2>🛫 Day 1 (12/9 Mon) - 抵達 + 秋葉原</h2>
+                
+                <div class="person-tabs">
+                    <button class="person-tab active" onclick="switchPerson(event, 'lw1')">👤 LW (成田→秋葉原)</button>
+                    <button class="person-tab" onclick="switchPerson(event, 'hazel1')">👤 Hazel (大阪→東京)</button>
+                </div>
+
+                <div id="lw1" class="person-content active">
+                    <div class="step">
+                        <div class="step-time">✈️ 10:50 - 15:55</div>
+                        <div class="step-title">香港 → 成田機場</div>
+                        <div class="step-detail">
+                            航班: UO870 | 飛行4小時
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-time">🚶 16:00 - 16:30</div>
+                        <div class="step-title">入境 + 領取行李</div>
+                        <div class="step-detail">
+                            跟隨 Arrival 標示 → 入境審查 → 行李 → 綠色通道<br>
+                            預估30分鐘
+                        </div>
+                    </div>                <div class="step">
+                    <div class="step-time">🎫 16:30 - 16:45</div>
+                    <div class="step-title">購買 Skyliner 票</div>
+                    <div class="info-box">
+                        📍 位置: B1F 京成電鐵售票處<br>
+                        💰 ¥2,310 (優惠) / ¥2,580 (現場)<br>
+                        ⏰ 營業: 07:00-21:00 | 有中文✅<br>
+                        <a href="https://www.klook.com/zh-TW/" class="link-btn" target="_blank">🎫 Klook預訂</a>
+                    </div>
+                </div>
+
+                    <div class="step">
+                        <div class="step-time">🚁 16:50 - 17:27</div>
+                        <div class="step-title"><span style="display: inline-block; background: #EE7F2D; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">京成電鐵</span>Skyliner: 成田 → 日暮里</div>
+                        <div class="step-detail">
+                            直達快速列車 | 對號座位 | 36分<br>
+                            📍 <strong>成田空港第2Terminal</strong> (地下) → <strong>日暮里駅</strong> (地面)<br>
+                            ℹ️ Skyliner 專用月台，無需轉線
+                        </div>
+                    </div>                <div class="step">
+                    <div class="step-time">🔄 17:36 - 17:50</div>
+                    <div class="step-title"><span style="display: inline-block; background: #2180a0; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">JR東日本</span>日暮里 → 秋葉原</div>
+                    <div class="info-box">
+                        🚇 JR 山手線 (品川方向) 1站<br>
+                        💳 ¥170 | ⏱️ 4分<br>
+                        🚪 出口: 秋葉原駅 昭和通口<br>
+                        📍 <strong>日暮里駅</strong> (地面) → <strong>秋葉原駅</strong> (地底 3F)<br>
+                        ⚠️ 需出閘、下樓、重新購票轉乘其他線
+                    </div>
+                </div>
+
+                    <div class="step">
+                        <div class="step-time">🚶 17:27 - 17:35</div>
+                        <div class="step-title">日暮里駅 → 秋葉原駅 (步行)</div>
+                        <div class="info-box">
+                            <strong>轉乘説明</strong><br>
+                            🚶 日暮里駅 Skyliner 出口 → JR 山手線月台 (步行3分)<br>
+                            ℹ️ 出站後跟隨 "山手線" 標示，往秋葉原方向
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-time">🚇 17:35 - 17:45</div>
+                        <div class="step-title"><span style="display: inline-block; background: #2180a0; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">JR東日本</span>日暮里 (にっぽり) → 秋葉原 (あきはばら)</div>
+                        <div class="info-box">
+                            🚇 JR 山手線 (品川方向) 1站<br>
+                            💳 ¥170 | ⏱️ 4分<br>
+                            📍 日暮里駅 (地面) → 秋葉原駅 (地面)<br>
+                            ℹ️ 直通列車，無需轉線
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-time">🚶 17:45 - 17:55</div>
+                        <div class="step-title">秋葉原駅 → Hotel Resol Stay Akihabara</div>
+                        <div class="info-box">
+                            🚶 秋葉原駅 (昭和通口) → 酒店 (步行3-4分)<br>
+                            📍 秋葉原駅 → 左轉昭和通 → 中央通交叉口<br>
+                            ℹ️ 向酒店職員詢問，Google Maps可導航<br>
+                            <a href="https://maps.google.com/maps?q=Hotel+Resol+Stay+Akihabara+Tokyo" class="link-btn" target="_blank">📍 Google Maps</a>
+                        </div>
+                    </div>
+
+                    <div class="highlight">
+                        ✅ LW 總花費: ¥2,480
+                    </div>
+                </div>
+
+                <div id="hazel1" class="person-content">
+                    <div class="step">
+                        <div class="step-time">🏨 11:00 - 13:00</div>
+                        <div class="step-title">Vessel Inn Namba 退房 + Lunch</div>
+                        <div class="step-detail">
+                            📍 大阪市中央區道頓堀2-2-18<br>
+                            自由享用午餐 (道頓堀/心齋橋美食)<br>
+                            <a href="https://maps.google.com/maps?q=Vessel+Inn+Namba+Osaka" class="link-btn" target="_blank">📍 位置</a>
+                        </div>
+                    </div>                <div class="step">
+                    <div class="step-time">🚇 13:45 - 14:00</div>
+                    <div class="step-title"><span style="display: inline-block; background: #9933FF; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">Osaka Metro</span>難波 → 新大阪</div>
+                    <div class="info-box">
+                        🚇 大阪地鐵 御堂筋線 (北方向) M17 → M12<br>
+                        💳 ¥280 | ⏱️ 15分<br>
+                        📍 <strong>難波駅</strong> (地底) → <strong>新大阪駅</strong> (地底)<br>
+                        ℹ️ 同線轉乘，無需出閘
+                    </div>
+                </div>
+
+                    <div class="step">
+                        <div class="step-time">🎫 14:15 - 14:30</div>
+                        <div class="step-title">購買新幹線票 (綠色窗口)</div>
+                        <div class="info-box">
+                            路線: 新大阪 → 東京 (のぞみ)<br>
+                            💰 ¥13,870 (自由席)<br>
+                            ⏰ 14:30-15:00 開車 (預計)<br>
+                            有中文/英文服務✅
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-time">🚄 14:30 - 17:00</div>
+                        <div class="step-title">新幹線 のぞみ: 新大阪 → 東京 (2h22m)</div>
+                        <div class="step-detail">
+                            💺 自由席 1-3號車<br>
+                            舒適寬敞，可在車上購買駅弁
+                        </div>
+                    </div>                <div class="step">
+                    <div class="step-time">🔄 17:00 - 17:20</div>
+                    <div class="step-title"><span style="display: inline-block; background: #2180a0; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">JR東日本</span>東京 → 秋葉原</div>
+                    <div class="info-box">
+                        🚇 JR 山手線/京濱東北線 (上野方向) 1站<br>
+                        💳 ¥140 | ⏱️ 4分<br>
+                        📍 <strong>東京駅</strong> (地面/八重洲) → <strong>秋葉原駅</strong> (地面)<br>
+                        ℹ️ 同線直通，無需出閘轉線
+                    </div>
+                </div>
+
+                    <div class="step">
+                        <div class="step-time">🚶 17:15 - 17:25</div>
+                        <div class="step-title">東京駅 (八重洲) → 秋葉原駅 (步行)</div>
+                        <div class="info-box">
+                            <strong>步行路線</strong><br>
+                            🚶 東京駅 (八重洲出口) → 秋葉原駅 (步行8-10分)<br>
+                            📍 東京駅 → 中央通 北上 → 秋葉原駅<br>
+                            ℹ️ 或搭 JR 1站 (山手線 / 京濱東北線) ⏱️ 4分, 💳 ¥140
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-time">🚶 17:25 - 17:35</div>
+                        <div class="step-title">秋葉原駅 → Hotel Resol Stay Akihabara</div>
+                        <div class="info-box">
+                            🚶 秋葉原駅 (昭和通口出站) → 酒店 (步行3-4分)<br>
+                            📍 駅北口 → 左轉昭和通 → 中央通北交叉口<br>
+                            <a href="https://maps.google.com/maps?q=Hotel+Resol+Stay+Akihabara+Tokyo" class="link-btn" target="_blank">📍 Google Maps</a>
+                        </div>
+                    </div>
+
+                    <div class="highlight">
+                        ✅ Hazel 總花費: ¥14,290
+                    </div>
+                </div>
+
+                <div class="important" style="margin-top: 20px;">
+                    👥 18:30-22:00 兩人會合: 秋葉原電器店 + 動漫 + 扭蛋 + 晚餐
+                </div>
+            </div>
+        </div>
+
+        <div id="day2" class="section">
+            <div class="card">
+                <h2>🛍️ Day 2 (12/10 Tue) - 原宿涉谷 SVT Pop-up</h2>
+                <div class="highlight">⭐ 12:00 必達: SVT Pop-up (神宮前 6-23-3)</div>
+                <div class="important">✅ 使用地鐵72小時卷 Day 1</div>
+
+                <div class="step">
+                    <div class="step-time">08:00 - 08:40</div>
+                    <div class="step-title"><span style="display: inline-block; background: #E74C3C; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">Tokyo Metro</span>秋葉原 (あきはばら) → 原宿 (はらじく)</div>
+                    <div class="info-box">
+                        🚇 東京Metro 日比谷線 (往中目黑方向) H08 → H02<br>
+                        ⏱️ 15分 | 💳 ¥200 | 出口5號 (竹下通)<br>
+                        📍 秋葉原駅 (地底 5F) → 原宿駅 (地底 4F)<br>
+                        ℹ️ 同線直通，無需出閘
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">09:30 - 10:15</div>
+                    <div class="step-title">🍩 I'm donut? (アイムドーナツ) 原宿</div>
+                    <div class="step-detail">
+                        <strong>必點: 生甜甜圈 (冷凍)</strong><br>
+                        ⏰ 10:00開門，09:30已排隊 (排隊 15-20分)<br>
+                        📍 竹下通 (竹下駅北口步行2分)<br>
+                        💰 ¥1,200-1,500/個<br>
+                        <a href="https://maps.google.com/maps?q=Im+donut+Harajuku+Tokyo" class="link-btn" target="_blank">📍 Google Maps</a>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">10:15 - 10:45</div>
+                    <div class="step-title">⛩️ 東鄉神社 (Kuromi御守)</div>
+                    <div class="step-detail">
+                        🚶 從 I'm donut 步行3分<br>
+                        🎀 買 Kuromi 御守<br>
+                        <a href="https://maps.google.com/maps?q=Togo+Shrine+Harajuku" class="link-btn" target="_blank">📍 位置</a>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">10:45 - 11:30</div>
+                    <div class="step-title">🎀 Sanrio 原宿旗艦店 (サンリオ)</div>
+                    <div class="step-detail">
+                        <strong>集中購買 Kuromi 產品聖地</strong><br>
+                        📍 竹下通 (駅北口步行3分)<br>
+                        🎯 <strong>Kuromi 產品:</strong> 飾品、包包、衣服、文具、文創品<br>
+                        ⏰ 営業: 10:00-20:00<br>
+                        <a href="https://maps.google.com/maps?q=Sanrio+Takeshita+Street+Harajuku" class="link-btn" target="_blank">📍 Google Maps</a>
+                    </div>
+                </div>
+
+                <div class="highlight">
+                    ⭐ <strong>12:00-14:00 Seventeen Pop-up Store 必到!</strong><br>
+                    📍 神宮前 6-23-3 (原宿駅竹下口步行8分)<br>
+                    🎤 購物、影相區、周邊蒐集 (limited edition)<br>
+                    ⏰ 開放時間: 10:00-20:00 (期間展示)<br>
+                    💡 <strong>提示:</strong> 12:00 人流最多，早到避免排隊<br>
+                    <a href="https://maps.google.com/maps?q=Seventeen+Shop+Jingumae+Tokyo" class="link-btn" target="_blank">📍 精確位置</a>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">14:00 - 14:45</div>
+                    <div class="step-title">🪄 Harry Potter Tokyo (ハリーポッター) 原宿店</div>
+                    <div class="step-detail">
+                        <strong>魔法周邊購物</strong><br>
+                        📍 竹下通 / 表參道 (駅步行5-7分)<br>
+                        🎁 官方周邊: 魔杖、火盃、衣服、文具、紀念品<br>
+                        <a href="https://maps.google.com/maps?q=Harry+Potter+Shop+Harajuku" class="link-btn" target="_blank">📍 Google Maps</a>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">14:45 - 15:30</div>
+                    <div class="step-title">🚶 Harry Potter → Kiddy Land (キディランド)</div>
+                    <div class="info-box">
+                        <strong>步行路線</strong><br>
+                        🚶 Harry Potter 原宿店 → Kiddy Land (步行8-10分)<br>
+                        📍 竹下通 → 明治通 → Kiddy Land (原宿駅竹下口北邊)<br>
+                        ℹ️ 沿竹下通北上，過明治通即達
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">15:30 - 16:30</div>
+                    <div class="step-title">🎀 Kiddy Land (キディランド) - Woodstock & Kuromi 聖地</div>
+                    <div class="step-detail">
+                        <strong>日本最大角色周邊百貨 (7樓超大)</strong><br>
+                        📍 竹下通 / 明治通交叉口<br>
+                        <br>
+                        🌟 <strong>必買樓層:</strong><br>
+                        • <strong>1F - Woodstock專區:</strong> 限定衣服、文具、飾品、療癒小物<br>
+                        • <strong>2F - Kuromi專區:</strong> 聯名服飾、包包、鑰匙圈、貼紙<br>
+                        • <strong>3-7F - 全角色周邊:</strong> Sanrio / Snoopy / 迪士尼 / 日本角色<br>
+                        • <strong>B1F - 優惠區:</strong> 折扣商品 & 限定發售<br>
+                        <br>
+                        💰 免稅優惠 (持護照可退稅 8%)<br>
+                        ⏰ 営業: 10:00-21:00<br>
+                        <a href="https://maps.google.com/maps?q=Kiddy+Land+Takeshita+Harajuku" class="link-btn" target="_blank">📍 Google Maps</a>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">16:30 - 17:00</div>
+                    <div class="step-title">🛍️ Kiddy Land → 池袋 (3COINS / UNIQLO / MUJI / Standard Products)</div>
+                    <div class="info-box">
+                        <span style="display: inline-block; background: #E74C3C; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">Tokyo Metro 銀座線</span><br>
+                        🚶 Kiddy Land (竹下口) → 原宿駅 (步行5分)<br>
+                        🚇 東京Metro 銀座線 (赤坂見附方向) G05 → 赤坂見附轉丸之內線 → M25 池袋<br>
+                        ⏱️ 約20分 (含轉線) | 💳 ¥200 | 直通到赤坂見附後轉線<br>
+                        📍 原宿駅 (地底 4F) → 池袋駅 (地底 2F)<br>
+                        ℹ️ 赤坂見附駅內轉線 (地底走廊連接)
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">17:00 - 19:00</div>
+                    <div class="step-title">🛍️ 池袋 購物天堂 (3COINS / UNIQLO / MUJI / Standard Products)</div>
+                    <div class="step-detail">
+                        <strong>必逛品牌集合區:</strong><br>
+                        📍 池袋駅 直結商場群 (駅周邊步行可到)<br>
+                        <br>
+                        🎁 <strong>3COINS (スリーコインズ):</strong> - 池袋駅東武デパート<br>
+                        • ¥300/¥500/¥1000 創意小物、療癒商品<br>
+                        • Snoopy / Sanrio 聯名商品<br>
+                        • 廚房用品、文具、家居小物<br>
+                        <br>
+                        👔 <strong>UNIQLO (ユニクロ):</strong> - 池袋駅附近多店<br>
+                        • 基本衣著、發熱衣、羽絨外套<br>
+                        • 日本獨家色系 & 聯名設計<br>
+                        • ¥500-3000 (平價質優)<br>
+                        <br>
+                        🏠 <strong>MUJI (無印良品):</strong> - Sunshine City / 池袋駅直結<br>
+                        • 日本居家必買: 護膚品、文具、家居用品<br>
+                        • 特色: 簡約設計、優惠價格<br>
+                        • 推薦: 乳液、化妝棉、無香護唇膏<br>
+                        <br>
+                        ⭐ <strong>Standard Products (スタンダードプロダクツ):</strong> - 池袋駅周邊<br>
+                        • 日本質感選物店 (高端雜貨)<br>
+                        • 厨房用品、食器、香氛、手作禮品<br>
+                        • ¥1000-5000 (質感高)
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">18:30 - 20:00</div>
+                    <div class="step-title">🎰 池袋 Gashapon + 購物</div>
+                    <div class="step-detail">
+                        3,000台扭蛋機 + 3COINS / UNIQLO / 無印<br>
+                        📍 Sunshine City (サンシャインシティ) 3F<br>
+                        🚶 池袋駅 C5出口 → Sunshine City (步行3分)<br>
+                        <br>
+                        🎲 <strong>必訪扭蛋景點:</strong><br>
+                        • 3F Gashapon Street (3,000+ 機台)<br>
+                        • B1F 品牌周邊區<br>
+                        • 推薦: Kuromi / Sanrio / 動漫角色蛋<br>
+                        <a href="https://maps.google.com/maps?q=Sunshine+City+Ikebukuro" class="link-btn" target="_blank">📍 Google Maps</a>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">20:00 - 20:30</div>
+                    <div class="step-title">🚇 池袋 (いけぶくろ) → 秋葉原 (あきはばら)</div>
+                    <div class="info-box">
+                        <span style="display: inline-block; background: #2180a0; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">東京Metro 丸之內線</span><br>
+                        🚇 東京Metro 丸之內線 (赤坂見附/銀座方向) M25 → M09 秋葉原<br>
+                        ⏱️ 16分 | 💳 ¥200 | 直通列車<br>
+                        📍 池袋駅 (地底 2F) → 秋葉原駅 (地底 1F)<br>
+                        ℹ️ 同線直通，無需出閘
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">20:30 - 22:30</div>
+                    <div class="step-title">🍜 晚餐 + 休息</div>
+                    <div class="step-detail">
+                        🍜 秋葉原拉麵/居酒屋<br>
+                        📍 秋葉原駅周邊 (駅北口美食街)<br>
+                        ⏰ 推薦: 秋葉原UDX 6F 拉麵橫丁、駅前美食街
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="day3" class="section">
+            <div class="card">
+                <h2>🎂 Day 3 (12/11 Wed) - 生日正日 + 演唱會</h2>
+                <div class="important">✅ 敘敘苑 11:00 預約 | ✅ Seventeen 17:30 開演 | 預計 21:00 散場</div>
+
+                <div class="important" style="background: #e7f3ff; border-left: 4px solid #2180a0; color: #0c3a5e;">
+                    <strong>09:00-15:30 兩人一起 (早餐 + 敘敘苑 生日大餐)</strong><br>
+                    <strong>15:30 起分線:</strong><br>
+                    • Hazel 線: 東京巨蛋 (とうきょうドーム) → 演唱會 17:30-21:00<br>
+                    • LW 線: 神社參拜 (結緣祈福) → Spa LaQua 溫泉 ♨️
+                </div>
+
+                <div class="person-tabs">
+                    <button class="person-tab active" onclick="switchPerson(event, 'hazel3')">🎤 Hazel 線</button>
+                    <button class="person-tab" onclick="switchPerson(event, 'lw3')">♨️ LW 線</button>
+                </div>
+
+                <div id="hazel3" class="person-content active">
+                    <div class="step">
+                        <div class="step-time">11:00 - 14:00</div>
+                        <div class="step-title">🍖 敘敘苑 (じょじょえん) 上野廣小路店 - 🎂 生日大餐!</div>
+                        <div class="info-box">
+                            📍 東京都台東區湯島3-38-11 (駅北口步行2分)<br>
+                            ✅ <strong>已預約 11:00 (VIP 位置 + 生日裝飾)</strong><br>
+                            <br>
+                            🍽️ <strong>菜單:</strong> 特選和牛燒肉套餐<br>
+                            • A5等级和牛 (黑毛和牛最高級)<br>
+                            • 時令野菜 + 白飯 + 湯 + 冰淇淋<br>
+                            • 服務生會協助燒烤 (不用自己烤)<br>
+                            <br>
+                            ⏰ <strong>用餐時間:</strong> 2-3小時 (慢慢享用)<br>
+                            💰 約 ¥10,000-12,000/人 (高級和牛)<br>
+                            🎊 <strong>生日優化:</strong> 可提前告知 Hazel 生日，餐廳會準備驚喜<br>
+                            <a href="https://maps.google.com/maps?q=Jojoen+Ueno+Tokyo" class="link-btn" target="_blank">📍 Google Maps</a>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-time">15:30 - 17:30</div>
+                        <div class="step-title">🎤 東京巨蛋 入場準備</div>
+                        <div class="step-detail">
+                            排隊、買周邊、影相<br>
+                            <a href="https://maps.google.com/maps?q=Tokyo+Dome" class="link-btn" target="_blank">📍 位置</a>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-time">17:30 - 21:00</div>
+                        <div class="step-title">🎤 Seventeen 演唱會</div>
+                        <div class="step-detail">
+                            3.5小時現場音樂會<br>
+                            🎊 生日快樂Hazel！
+                        </div>
+                    </div>
+                </div>
+
+                <div id="lw3" class="person-content">
+                    <div class="step">
+                        <div class="step-time">15:30 - 15:45</div>
+                        <div class="step-title"><span style="display: inline-block; background: #8A6FA8; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">Tokyo Metro</span>後樂園 (こうらくえん) → 飯田橋 (いいだばし)</div>
+                        <div class="info-box">
+                            🚇 東京Metro 南北線 (往四ツ谷方向) | ⏱️ 5分<br>
+                            💳 ¥180 | 直通列車
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-time">15:45 - 16:30</div>
+                        <div class="step-title">⛩️ 東京大神宮 (とうきょうだいじんぐう) - 結緣參拜</div>
+                        <div class="step-detail">
+                            <strong>結緣 (戀愛) 祈福聖地</strong><br>
+                            📍 飯田橋駅 A4出口步行5分 (靖国通)<br>
+                            🙏 <strong>參拜流程:</strong><br>
+                            1. 鳥居 → 手水舍淨手口<br>
+                            2. 本殿參拜 (二礼二拍手一礼)<br>
+                            3. 掛繪馬 (戀愛願望)<br>
+                            4. 購買結緣御守 (紅色推薦)<br>
+                            <br>
+                            🎀 <strong>推薦御守:</strong> 結緣守 / 恋愛成就守<br>
+                            💰 御守約 ¥500-1,000<br>
+                            <a href="https://maps.google.com/maps?q=Tokyo+Daijingu+Shrine" class="link-btn" target="_blank">📍 Google Maps</a>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-time">17:00 - 17:45</div>
+                        <div class="step-title">💰 小網神社 (こあみじんじゃ) - 洗錢祈福</div>
+                        <div class="step-detail">
+                            <strong>財運 & 商業繁榮祈福聖地</strong><br>
+                            📍 人形町駅 A3出口步行2分 (日本橋地區)<br>
+                            <br>
+                            🙏 <strong>洗錢儀式 (金運UP):</strong><br>
+                            • 在社務所買 100 圓銅幣 (參拜費)<br>
+                            • 到水洗池把硬幣浸泡、清洗<br>
+                            • 祈禱財運 → 帶回錢包 (傳說會增加金運)<br>
+                            <br>
+                            💡 <strong>小知識:</strong> 江戶商人都來這邊祈福<br>
+                            🎀 購買: 開運守 / 金銭守<br>
+                            <a href="https://maps.google.com/maps?q=Koami+Shrine+Tokyo" class="link-btn" target="_blank">📍 Google Maps</a>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-time">19:15 - 21:00</div>
+                        <div class="step-title">♨️ Spa LaQua 溫泉 + 三溫暖</div>
+                        <div class="step-detail">
+                            露天溫泉 + 岩盤浴 1.5小時<br>
+                            <a href="https://maps.google.com/maps?q=Spa+LaQua+Tokyo" class="link-btn" target="_blank">📍 位置</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="day4" class="section">
+            <div class="card">
+                <h2>🎨 Day 4 (12/12 Thu) - 文青路線</h2>
+                <div class="important">✅ 地鐵卷最後一日 (有效至 21:30)</div>
+
+                <div class="step">
+                    <div class="step-time">09:00 - 09:40</div>
+                    <div class="step-title"><span style="display: inline-block; background: #2180a0; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">JR東日本</span>秋葉原 (あきはばら) → 吉祥寺 (きちじょうじ)</div>
+                    <div class="info-box">
+                        🚶 秋葉原駅 → JR中央線月台 (步行3分，跟隨標示)<br>
+                        🚇 JR 中央線 (往高尾/八王子方向) 快速列車 | 💳 ¥220 | ⏱️ 40分<br>
+                        📍 秋葉原駅 (地面 JR 普通線) → 吉祥寺駅 (地面)<br>
+                        ℹ️ 直通列車，無需轉線
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">09:40 - 12:00</div>
+                    <div class="step-title">🎨 吉祥寺 (きちじょうじ) 文青街逛街</div>
+                    <div class="step-detail">
+                        <strong>必訪景點:</strong><br>
+                        🚶 吉祥寺駅 北口出站 → 井之頭公園 (步行3分)<br>
+                        <br>
+                        ⛩️ <strong>井之頭恩賜公園</strong> (いのかしらおんしこうえん)<br>
+                        • 天鵝湖 + 博物館 + 文創展覽<br>
+                        • ☕ <strong>Park Side Cafe</strong> (公園南邊咖啡) - 推薦甜點<br>
+                        <br>
+                        🛍️ <strong>吉祥寺商店街</strong> (駅周邊步行可到)<br>
+                        • 古著店、獨立雜貨、手作禮品<br>
+                        • ☕ <strong>Nora</strong> (咖啡豆專賣) - 吉祥寺駅北口步行2分<br>
+                        &nbsp;&nbsp;🌟 手沖精品咖啡、豆子販售<br>
+                        • ☕ <strong>Vermillion Café</strong> - 井之頭公園旁 (步行7分)<br>
+                        &nbsp;&nbsp;🌟 景觀咖啡館、湖景<br>
+                        <a href="https://maps.google.com/maps?q=Inokashira+Park+Kichijoji" class="link-btn" target="_blank">📍 井之頭公園</a>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">12:00 - 13:20</div>
+                    <div class="step-title">🍽️ 午餐</div>
+                    <div class="step-detail">
+                        📍 吉祥寺駅周邊美食<br>
+                        推薦: 吉祥寺UDY (駅北口) 或公園週邊咖啡廳<br>
+                        ⏰ 自由用餐 1-1.5小時
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">13:20 - 13:45</div>
+                    <div class="step-title">🚶 吉祥寺駅 → 京王井之頭線月台</div>
+                    <div class="info-box">
+                        🚶 從公園或商店街 → 吉祥寺駅南口 (步行5分)<br>
+                        📍 吉祥寺駅 南口 (京王井之頭線出入口)<br>
+                        ℹ️ 跟隨車站內指示，京王線單獨入口
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">13:45 - 14:00</div>
+                    <div class="step-title">🚊 吉祥寺 (きちじょうじ) → 下北澤 (しもきたざわ)</div>
+                    <div class="info-box">
+                        🚊 京王井之頭線 (往渋谷方向) | 💳 ¥160 | ⏱️ 15分<br>
+                        📍 吉祥寺駅 (地面) → 下北澤駅 (地面)<br>
+                        ℹ️ 直通列車，無需轉線 | 車次多 (2-3分鐘一班)
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">14:00 - 16:30</div>
+                    <div class="step-title">👕 下北澤 (しもきたざわ) 古著聖地</div>
+                    <div class="step-detail">
+                        <strong>下北澤特色商區:</strong><br>
+                        👕 古著・二手衣店 (駅周邊密集)<br>
+                        • 推薦: FLAMINGO / Tokyo Rebel / Rebuild by Sensual / Pandora<br>
+                        <br>
+                        ☕ <strong>咖啡小店推薦:</strong><br>
+                        • ☕ <strong>Fuglen Tokyo</strong> (北欧咖啡) - 駅北口5分<br>
+                        &nbsp;&nbsp;🌟 自烘豆、手沖精品咖啡、木質內裝<br>
+                        • ☕ <strong>Carry On Coffee</strong> - 駅東口2分<br>
+                        &nbsp;&nbsp;🌟 深焙豆、濃郁風味<br>
+                        • ☕ <strong>Coffee House Noka</strong> - 駅西口<br>
+                        &nbsp;&nbsp;🌟 復古日式咖啡館、老店風情<br>
+                        <br>
+                        🎀 獨立雜貨 + 手作禮品<br>
+                        • TOKYO HANDS (下北澤店) - 文創用品集合<br>
+                        <a href="https://maps.google.com/maps?q=Shimokitazawa+Tokyo+vintage" class="link-btn" target="_blank">📍 下北澤商圈</a>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">16:30 - 16:50</div>
+                    <div class="step-title"><span style="display: inline-block; background: #6B4C9A; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">Tokyo Metro 副都心線</span>下北澤 (しもきたざわ) → 池袋 (いけぶくろ)</div>
+                    <div class="info-box">
+                        🚇 東京Metro 副都心線 (往和光市方向) F13 → F10<br>
+                        ⏱️ 16分 | ✅ 地鐵卷有效<br>
+                        📍 下北澤駅 (地底 2F) → 池袋駅 (地底 2F)<br>
+                        ℹ️ 同線直通，無需出閘轉線
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">16:50 - 17:20</div>
+                    <div class="step-title">🚶 池袋駅 → 蟹まみれ 餐廳</div>
+                    <div class="info-box">
+                        🚶 池袋駅 (副都心線出口) → 蟹まみれ (步行5-7分)<br>
+                        📍 池袋駅 C5出口 → 向北步行 (跟隨餐廳指示)<br>
+                        📍 東池袋1-19-10 (Google Maps 可導航)
+                    </div>
+                </div>
+
+                <div class="highlight">
+                    🦀 17:30-19:30 蟹放題晚餐<br>
+                    帝王蟹吃到飽 100分鐘 約 ¥8,500/人<br>
+                    📍 蟹まみれ (かにまみれ)<br>
+                    <a href="https://maps.google.com/maps?q=Kani+Mamire+Ikebukuro" class="link-btn" target="_blank">📍 Google Maps</a>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">19:30 - 20:00</div>
+                    <div class="step-title">🚶 蟹まみれ → 池袋駅</div>
+                    <div class="info-box">
+                        🚶 蟹まみれ → 池袋駅 (步行5-7分)<br>
+                        📍 原路返回 C5 出口<br>
+                        ℹ️ 沿餐廳來路返回駅
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">20:00 - 21:00</div>
+                    <div class="step-title">🛍️ 池袋站前掃貨 (地鐵卷最後一小時)</div>
+                    <div class="step-detail">
+                        📍 池袋駅直結商場<br>
+                        🛍️ <strong>推薦:</strong> BIC CAMERA / 東武百貨 / Sunshine City<br>
+                        ⚠️ <strong>時限:</strong> 地鐵卷有效至 21:30，最後機會！
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">21:00 - 21:30</div>
+                    <div class="step-title"><span style="display: inline-block; background: #6B4C9A; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">Tokyo Metro 副都心線</span>池袋 (いけぶくろ) → 秋葉原 (あきはばら)</div>
+                    <div class="info-box">
+                        🚇 東京Metro 副都心線 (往中央林間方向) F10 → (轉丸之內線) → M09<br>
+                        ⏱️ 約20分 (含轉線) | ✅ 地鐵卷有效<br>
+                        <br>
+                        <strong>轉線說明:</strong><br>
+                        📍 池袋駅 → 副都心線乘車<br>
+                        📍 赤坂見附駅 → 丸之內線轉乘 (地底走廊連接)<br>
+                        📍 秋葉原駅 (地底 1F) 到達
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">21:30 - 22:30</div>
+                    <div class="step-title">🏨 秋葉原駅 → 酒店休息</div>
+                    <div class="step-detail">
+                        🚶 秋葉原駅 → 酒店 (步行3-4分)<br>
+                        ⏰ 地鐵卷於 21:30 失效，IC 卡付款
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="day5" class="section">
+            <div class="card">
+                <h2>✈️ Day 5 (12/13 Fri) - 機場日</h2>
+                <div class="important">⚠️ 20:55 飛機起飛 | 18:25 前到機場 | 16:00 出發</div>
+
+                <div class="step">
+                    <div class="step-time">08:00 - 08:20</div>
+                    <div class="step-title"><span style="display: inline-block; background: #2180a0; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">JR東日本</span>秋葉原 (あきはばら) → 上野 (うえの)</div>
+                    <div class="info-box">
+                        🚇 JR 山手線 (往新宿方向) 1站 | 💳 ¥150 | ⏱️ 4分<br>
+                        📍 秋葉原駅 (地面 JR普通線) → 上野駅 (地面)<br>
+                        ℹ️ 直通列車，無需轉線
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">08:20 - 08:40</div>
+                    <div class="step-title">🔐 上野駅 寄存行李</div>
+                    <div class="info-box">
+                        <strong>行李寄存選項:</strong><br>
+                        ✅ <strong>Coin Locker (推薦):</strong> 上野駅 B1F | ¥700-800<br>
+                        • 營業: 06:00-23:00<br>
+                        • 28吋行李箱可放<br>
+                        • 當天內可領取<br>
+                        <br>
+                        ✅ <strong>Ecbo Cloak:</strong> 上野周邊店家 | ¥1,000-1,500<br>
+                        • 需用App預約<br>
+                        • <a href="https://www.ecbo.io/" class="link-btn" target="_blank">🎫 Ecbo App</a>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">08:40 - 09:00</div>
+                    <div class="step-title">🚇 上野駅 → 淺草駅</div>
+                    <div class="info-box">
+                        <span style="display: inline-block; background: #E74C3C; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">Tokyo Metro 銀座線</span><br>
+                        🚇 東京Metro 銀座線 (浅草方向) G11 → G16 淺草<br>
+                        ⏱️ 5分 | IC卡 ¥170<br>
+                        📍 上野駅 (地底 5F) → 淺草駅 (地底 5F)<br>
+                        ℹ️ 同線直通，無需出閘
+                    </div>
+                </div>
+
+                <div class="step">
+                        <div class="step-time">09:00 - 11:00</div>
+                        <div class="step-title">⛩️ 淺草寺 (せんそうじ) + 仲見世街購物</div>
+                        <div class="step-detail">
+                            <strong>東京最古老寺廟 & 必打卡景點</strong><br>
+                            📍 淺草駅 出口1 直達 (駅直結)<br>
+                            <br>
+                            🎯 <strong>遊覽路線:</strong><br>
+                            • 雷門 (かみなりもん) - 紅燈籠打卡點<br>
+                            • 仲見世街 (なかみせ) - 97間傳統老店<br>
+                            • 本殿參拜 + 求籤 (¥100)<br>
+                            • 阿美橫町 - 和菓子、乾貨、紀念品<br>
+                            <br>
+                            🛍️ <strong>必買手信:</strong><br>
+                            • 雷門名物: 人形燒 (にんぎょうやき) - ¥300-500<br>
+                            • 淺草海苔 (のり) - 土產必選<br>
+                            • 傳統扇子、木製工藝品<br>
+                            • 淺草抹茶餅 (わらび餅)<br>
+                            <br>
+                            ⏰ 營業: 平日 09:00-18:00 | 假日延長<br>
+                            💡 <strong>提示:</strong> 09:00 早到避免人擁擠<br>
+                            <a href="https://maps.google.com/maps?q=Sensoji+Temple+Asakusa" class="link-btn" target="_blank">📍 淺草寺官方</a>
+                        </div>
+                    </div>
+
+                <div class="step">
+                    <div class="step-time">11:00 - 11:25</div>
+                    <div class="step-title"><span style="display: inline-block; background: #8A6FA8; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">Tokyo Metro 半蔵門線</span>淺草 (あさくさ) → 押上 晴空塔前 (おしあげスカイツリー)</div>
+                    <div class="info-box">
+                        🚇 東京Metro 半蔵門線 (往中央林間方向) Z09 → Z10<br>
+                        IC卡 ¥180 | ⏱️ 3分 | 直通列車<br>
+                        📍 淺草駅 (地底 5F) → 押上駅 (地底 3F)<br>
+                        ℹ️ 同線直通，無需出閘轉線
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">11:25 - 11:35</div>
+                    <div class="step-title">🚶 押上駅 → Tokyo Solamachi</div>
+                    <div class="info-box">
+                        <strong>駅直結步行路線</strong><br>
+                        🚶 押上駅 (地底 3F) → 直通通道 → Tokyo Solamachi B2F (步行2分)<br>
+                        ℹ️ 駅內指示清楚，跟隨 Solamachi 標示
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">11:35 - 12:15</div>
+                    <div class="step-title">🐰 Esther Bunny Pop-up Store @ Tokyo Solamachi</div>
+                    <div class="step-detail">
+                        <strong>角色周邊限定店</strong><br>
+                        📍 Tokyo Solamachi (東京ソラマチ) 2F<br>
+                        🐰 限定商品: Esther Bunny 文創、小物、飾品、限定衣服<br>
+                        ⏰ 営業: 10:00-21:00<br>
+                        <a href="https://maps.google.com/maps?q=Tokyo+Solamachi" class="link-btn" target="_blank">📍 Tokyo Solamachi 地圖</a>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">12:15 - 14:00</div>
+                    <div class="step-title">🍖 午餐</div>
+                    <div class="step-detail">
+                        📍 Tokyo Solamachi 内餐廳 或 押上周邊美食<br>
+                        推薦: Solamachi B2F 美食街 (有多間拉麵/烏冬/定食)<br>
+                        ⏰ 自由用餐 1-2小時
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">14:00 - 15:00</div>
+                    <div class="step-title">🚇 Solamachi → 上野駅 (取回行李)</div>
+                    <div class="info-box">
+                        <span style="display: inline-block; background: #8A6FA8; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">Tokyo Metro 半蔵門線</span><br>
+                        🚶 Tokyo Solamachi (B2F) → 押上駅 (直通步行 2分)<br>
+                        🚇 東京Metro 半蔵門線 (往渋谷方向) Z10 → Z09 淺草<br>
+                        IC卡 ¥180 | ⏱️ 3分<br>
+                        <br>
+                        🚇 淺草駅 → 上野駅 (銀座線)<br>
+                        <span style="display: inline-block; background: #E74C3C; color: white; padding: 3px 8px; border-radius: 4px; font-size: 0.8em; margin-right: 8px;">Tokyo Metro 銀座線</span><br>
+                        東京Metro 銀座線 (赤坂見附方向) G16 → G11 上野<br>
+                        IC卡 ¥170 | ⏱️ 5分<br>
+                        <br>
+                        🚶 上野駅 B1F Coin Locker 取回行李 (5分)
+                    </div>
+                </div>
+
+                <div class="important" style="margin: 15px 0;">
+                    ⚠️ 15:00 完成購物 & 取回行李 | 15:30 準時出發往京成上野駅
+                </div>
+
+                <div class="step">
+                    <div class="step-time">15:00 - 15:30</div>
+                    <div class="step-title">🚶 上野駅 → 京成上野駅</div>
+                    <div class="info-box">
+                        <strong>步行路線 (推薦)</strong><br>
+                        🚶 上野駅 (JR普通線出口) → 京成上野駅 (步行5分)<br>
+                        📍 JR 上野駅 → 不忍通 (沿指示往京成方向) → 京成上野駅<br>
+                        ℹ️ 站內指示清楚，中文也有
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">15:30 - 16:00</div>
+                    <div class="step-title">🎫 京成上野駅 購票 + 上廁所</div>
+                    <div class="info-box">
+                        📍 京成上野駅 B1F 售票處<br>
+                        💳 Skyliner 票: ¥2,580 (IC卡或現金)<br>
+                        ⏰ 營業: 06:00-23:00 | 有中文✅<br>
+                        ⚠️ <strong>提示:</strong> 提前15分抵達月台
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">16:00 - 16:30</div>
+                    <div class="step-title">🚁 京成上野 (けいせいうえの) → 成田機場 Skyliner</div>
+                    <div class="info-box">
+                        💳 ¥2,580 (單程) | IC卡可用<br>
+                        ⏱️ 41分直達 → 17:00-17:20 到機場<br>
+                        📍 京成上野駅 (地下 B1F) → 成田空港第2Terminal (地下)<br>
+                        <br>
+                        🎫 <strong>購票選項:</strong><br>
+                        • 京成上野駅售票處 (有中文) ✅<br>
+                        • Klook 網上預訂 (更便宜 ¥2,310)<br>
+                        <a href="https://www.klook.com/zh-TW/" class="link-btn" target="_blank">🎫 Klook預訂</a>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-time">18:15 - 20:55</div>
+                    <div class="step-title">😎 機場免稅 + Ray-Ban</div>
+                    <div class="step-detail">
+                        Fa-So-La TAX FREE | Ray-Ban 約 ¥20,000
+                    </div>
+                </div>
+
+                <div class="highlight">
+                    ✈️ 20:55 起飛 → 01:25 (+1) 抵達香港<br>
+                    🎊 旅程完美結束！
+                </div>
+            </div>
+        </div>
+
+        <div id="map" class="section">
+            <div class="card">
+                <h2>🗺️ 互動動線圖</h2>
+                <div class="highlight">點擊下方日期查看該天行程軌跡 (視覺化地圖)</div>
+                
+                <div style="margin: 20px 0;">
+                    <button class="map-btn" onclick="toggleDayRoute(event, 'day1-route')">📍 Day 1: 成田→秋葉原</button>
+                    <button class="map-btn" onclick="toggleDayRoute(event, 'day2-route')">📍 Day 2: 原宿涉谷SVT</button>
+                    <button class="map-btn" onclick="toggleDayRoute(event, 'day3-route')">📍 Day 3: 生日日程</button>
+                    <button class="map-btn" onclick="toggleDayRoute(event, 'day4-route')">📍 Day 4: 文青路線</button>
+                    <button class="map-btn" onclick="toggleDayRoute(event, 'day5-route')">📍 Day 5: 淺草→機場</button>
+                </div>
+
+                <div id="day1-route" class="route-info" style="display: none;">
+                    <h3>Day 1: 抵達 + 秋葉原探險</h3>
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>LW 路線:</strong><br>
+                        🛬 成田機場 → 🚁 日暮里 (Skyliner 36分) → 🚉 秋葉原 → 🏨 Hotel Resol Stay<br>
+                        <em>站點: 成田空港 → 日暮里駅 → 秋葉原駅</em>
+                    </div>
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>Hazel 路線:</strong><br>
+                        🏨 大阪Namba → 🚄 新大阪 (新幹線 2h22m) → 東京駅 → 🚉 秋葉原 → 🏨 Hotel Resol Stay<br>
+                        <em>站點: 新大阪 → 東京駅 → 秋葉原駅</em>
+                    </div>
+                    <div class="step" style="margin-top: 15px;">
+                        <strong>關鍵地點:</strong>
+                        <ul style="margin: 10px 0; margin-left: 20px;">
+                            <li>🚁 Skyliner (京成電鐵)</li>
+                            <li>🚄 新幹線 (JR)</li>
+                            <li>🏨 Hotel Resol Stay Akihabara</li>
+                            <li>🏬 秋葉原電器街 BIC CAMERA</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day2-route" class="route-info" style="display: none;">
+                    <h3>Day 2: 原宿涉谷 SVT Pop-up 必達!</h3>
+                    <div style="background: #e7f3ff; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>核心路線 (兩人同行):</strong><br>
+                        🏨 秋葉原 → 📍 原宿 (日比谷線) → 🍩 I'm donut? → ⛩️ 東鄉神社 → 🎀 Sanrio → <strong>⭐ SVT Pop-up (12:00)</strong><br>
+                        → 🪄 Harry Potter → 👔 表參道 Ralph Lauren → 🐣 東京站 Snoopy → 🎰 池袋 Gashapon → 🍜 晚餐 → 秋葉原
+                    </div>
+                    <div class="step" style="margin-top: 15px;">
+                        <strong>必達關鍵時間:</strong>
+                        <ul style="margin: 10px 0; margin-left: 20px;">
+                            <li>⏰ 12:00 - SVT Pop-up (神宮前 6-23-3) ⭐</li>
+                            <li>📍 原宿駅 (日比谷線)</li>
+                            <li>🎀 Sanrio 原宿店 (竹下通)</li>
+                            <li>🎰 池袋 Sunshine City (Gashapon)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day3-route" class="route-info" style="display: none;">
+                    <h3>Day 3: 生日正日 (兩人分線)</h3>
+                    <div style="background: #f8d7da; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>Hazel 線:</strong><br>
+                        🏨 秋葉原 → 🍖 敘敘苑 (上野 11:00) → 🍽️ 午餐 & 美食街 → 🎤 東京巨蛋 (後樂園駅) → 🎊 Seventeen 演唱會 (17:30-21:00)
+                    </div>
+                    <div style="background: #e0f2fe; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>LW 線:</strong><br>
+                        🎤 東京巨蛋 看演唱會期間 → ⛩️ 東京大神宮 (結緣) → ⛩️ 小網神社 (財運) → 💰 人形町午餐 → ♨️ Spa LaQua (溫泉 + 三溫暖)
+                    </div>
+                    <div class="step" style="margin-top: 15px;">
+                        <strong>分線地點:</strong>
+                        <ul style="margin: 10px 0; margin-left: 20px;">
+                            <li>🍖 敘敘苑 上野廣小路店 (預約 11:00)</li>
+                            <li>🎤 東京巨蛋 / 後樂園駅</li>
+                            <li>⛩️ 東京大神宮 / 飯田橋駅</li>
+                            <li>♨️ Spa LaQua / 後樂園駅</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day4-route" class="route-info" style="display: none;">
+                    <h3>Day 4: 文青路線 (吉祥寺 → 下北澤 → 池袋)</h3>
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>完整路線:</strong><br>
+                        🏨 秋葉原 → 🎨 吉祥寺 (JR中央線 40分) → 🏞️ 井之頭公園 + 商店街 → 👕 下北澤 (京王井之頭線) → 古著街 → 🦀 池袋蟹放題 → 🛍️ 掃貨 → 秋葉原
+                    </div>
+                    <div class="step" style="margin-top: 15px;">
+                        <strong>主要景點:</strong>
+                        <ul style="margin: 10px 0; margin-left: 20px;">
+                            <li>🎨 吉祥寺駅 + 井之頭恩賜公園</li>
+                            <li>👕 下北澤駅 (古著聖地)</li>
+                            <li>🦀 蟹まみれ (池袋) - 帝王蟹吃到飽</li>
+                            <li>🛍️ BIC CAMERA / 東武百貨</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day5-route" class="route-info" style="display: none;">
+                    <h3>Day 5: 機場日 (淺草 → 晴空塔 → 成田機場)</h3>
+                    <div style="background: #d1ecf1; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>最後一日路線:</strong><br>
+                        🏨 秋葉原 → 🔐 上野駅 (寄行李) → ⛩️ 淺草寺 (雷門) → 🗼 晴空塔 (Tokyo Solamachi) → 🐰 Esther Bunny Pop-up → 🍖 午餐 → 🚁 成田 Skyliner (京成上野) → ✈️ 機場 (17:00-17:20) → 😎 免稅購物 → ✈️ 20:55 起飛
+                    </div>
+                    <div class="step" style="margin-top: 15px;">
+                        <strong>重要時程:</strong>
+                        <ul style="margin: 10px 0; margin-left: 20px;">
+                            <li>🔐 08:00 - 上野駅寄行李 (Coin Locker ¥700-800)</li>
+                            <li>⛩️ 09:00-11:00 - 淺草寺 + 仲見世街</li>
+                            <li>🐰 11:30-12:00 - Esther Bunny Pop-up (Tokyo Solamachi)</li>
+                            <li>⚠️ 15:30 - 完成購物 + 取回行李</li>
+                            <li>🚁 16:00 - 出發 Skyliner 往機場</li>
+                            <li>✈️ 18:25 前 - 必須到機場</li>
+                            <li>🎫 20:55 - United Airlines 起飛</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="luggage" class="section">
+            <div class="card">
+                <h2>📦 行李寄送攻略</h2>
+
+                <div class="highlight">
+                    📍 Day 1-4: 秋葉原酒店行李室 (免費)<br>
+                    📍 Day 5: 上野站寄存 → 購物 → 機場
+                </div>
+
+        <div id="map" class="section">
+            <div class="card">
+                <h2>🗺️ 互動動線圖</h2>
+                <div class="highlight">點擊下方日期查看該天行程軌跡 (視覺化地圖)</div>
+                
+                <div style="margin: 20px 0;">
+                    <button class="map-btn" onclick="toggleDayRoute(event, 'day1-route')">📍 Day 1: 成田→秋葉原</button>
+                    <button class="map-btn" onclick="toggleDayRoute(event, 'day2-route')">📍 Day 2: 原宿涉谷SVT</button>
+                    <button class="map-btn" onclick="toggleDayRoute(event, 'day3-route')">📍 Day 3: 生日日程</button>
+                    <button class="map-btn" onclick="toggleDayRoute(event, 'day4-route')">📍 Day 4: 文青路線</button>
+                    <button class="map-btn" onclick="toggleDayRoute(event, 'day5-route')">📍 Day 5: 淺草→機場</button>
+                </div>
+
+                <div id="day1-route" class="route-info" style="display: none;">
+                    <h3>Day 1: 抵達 + 秋葉原探險</h3>
+                    <div style="background: #f8fafc; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>LW 路線:</strong><br>
+                        🛬 成田機場 → 🚁 日暮里 (Skyliner 36分) → 🚉 秋葉原 → 🏨 Hotel Resol Stay<br>
+                        <em>站點: 成田空港 → 日暮里駅 → 秋葉原駅</em>
+                    </div>
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>Hazel 路線:</strong><br>
+                        🏨 大阪Namba → 🚄 新大阪 (新幹線 2h22m) → 東京駅 → 🚉 秋葉原 → 🏨 Hotel Resol Stay<br>
+                        <em>站點: 新大阪 → 東京駅 → 秋葉原駅</em>
+                    </div>
+                    <div class="step" style="margin-top: 15px;">
+                        <strong>關鍵地點:</strong>
+                        <ul style="margin: 10px 0; margin-left: 20px;">
+                            <li>🚁 Skyliner (京成電鐵)</li>
+                            <li>🚄 新幹線 (JR)</li>
+                            <li>🏨 Hotel Resol Stay Akihabara</li>
+                            <li>🏬 秋葉原電器街 BIC CAMERA</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day2-route" class="route-info" style="display: none;">
+                    <h3>Day 2: 原宿涉谷 SVT Pop-up 必達!</h3>
+                    <div style="background: #e7f3ff; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>核心路線 (兩人同行):</strong><br>
+                        🏨 秋葉原 → 📍 原宿 (日比谷線) → 🍩 I'm donut? → ⛩️ 東鄉神社 → 🎀 Sanrio → <strong>⭐ SVT Pop-up (12:00)</strong><br>
+                        → 🪄 Harry Potter → 👔 表參道 Ralph Lauren → 🐣 東京站 Snoopy → 🎰 池袋 Gashapon → 🍜 晚餐 → 秋葉原
+                    </div>
+                    <div class="step" style="margin-top: 15px;">
+                        <strong>必達關鍵時間:</strong>
+                        <ul style="margin: 10px 0; margin-left: 20px;">
+                            <li>⏰ 12:00 - SVT Pop-up (神宮前 6-23-3) ⭐</li>
+                            <li>📍 原宿駅 (日比谷線)</li>
+                            <li>🎀 Sanrio 原宿店 (竹下通)</li>
+                            <li>🎰 池袋 Sunshine City (Gashapon)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day3-route" class="route-info" style="display: none;">
+                    <h3>Day 3: 生日正日 (兩人分線)</h3>
+                    <div style="background: #f8d7da; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>Hazel 線:</strong><br>
+                        🏨 秋葉原 → 🍖 敘敘苑 (上野 11:00) → 🍽️ 午餐 & 美食街 → 🎤 東京巨蛋 (後樂園駅) → 🎊 Seventeen 演唱會 (17:30-21:00)
+                    </div>
+                    <div style="background: #e0f2fe; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>LW 線:</strong><br>
+                        🎤 東京巨蛋 看演唱會期間 → ⛩️ 東京大神宮 (結緣) → ⛩️ 小網神社 (財運) → 💰 人形町午餐 → ♨️ Spa LaQua (溫泉 + 三溫暖)
+                    </div>
+                    <div class="step" style="margin-top: 15px;">
+                        <strong>分線地點:</strong>
+                        <ul style="margin: 10px 0; margin-left: 20px;">
+                            <li>🍖 敘敘苑 上野廣小路店 (預約 11:00)</li>
+                            <li>🎤 東京巨蛋 / 後樂園駅</li>
+                            <li>⛩️ 東京大神宮 / 飯田橋駅</li>
+                            <li>♨️ Spa LaQua / 後樂園駅</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day4-route" class="route-info" style="display: none;">
+                    <h3>Day 4: 文青路線 (吉祥寺 → 下北澤 → 池袋)</h3>
+                    <div style="background: #fff3cd; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>完整路線:</strong><br>
+                        🏨 秋葉原 → 🎨 吉祥寺 (JR中央線 40分) → 🏞️ 井之頭公園 + 商店街 → 👕 下北澤 (京王井之頭線) → 古著街 → 🦀 池袋蟹放題 → 🛍️ 掃貨 → 秋葉原
+                    </div>
+                    <div class="step" style="margin-top: 15px;">
+                        <strong>主要景點:</strong>
+                        <ul style="margin: 10px 0; margin-left: 20px;">
+                            <li>🎨 吉祥寺駅 + 井之頭恩賜公園</li>
+                            <li>👕 下北澤駅 (古著聖地)</li>
+                            <li>🦀 蟹まみれ (池袋) - 帝王蟹吃到飽</li>
+                            <li>🛍️ BIC CAMERA / 東武百貨</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="day5-route" class="route-info" style="display: none;">
+                    <h3>Day 5: 機場日 (淺草 → 晴空塔 → 成田機場)</h3>
+                    <div style="background: #d1ecf1; padding: 15px; border-radius: 6px; margin: 10px 0;">
+                        <strong>最後一日路線:</strong><br>
+                        🏨 秋葉原 → 🔐 上野駅 (寄行李) → ⛩️ 淺草寺 (雷門) → 🗼 晴空塔 (Tokyo Solamachi) → 🐰 Esther Bunny Pop-up → 🍖 午餐 → 🚁 成田 Skyliner (京成上野) → ✈️ 機場 (17:00-17:20) → 😎 免稅購物 → ✈️ 20:55 起飛
+                    </div>
+                    <div class="step" style="margin-top: 15px;">
+                        <strong>重要時程:</strong>
+                        <ul style="margin: 10px 0; margin-left: 20px;">
+                            <li>🔐 08:00 - 上野駅寄行李 (Coin Locker ¥700-800)</li>
+                            <li>⛩️ 09:00-11:00 - 淺草寺 + 仲見世街</li>
+                            <li>🐰 11:30-12:00 - Esther Bunny Pop-up (Tokyo Solamachi)</li>
+                            <li>⚠️ 15:30 - 完成購物 + 取回行李</li>
+                            <li>🚁 16:00 - 出發 Skyliner 往機場</li>
+                            <li>✈️ 18:25 前 - 必須到機場</li>
+                            <li>🎫 20:55 - United Airlines 起飛</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="luggage" class="section">
+            <div class="card">
+                <h2>📦 行李 + 寄包攻略</h2>
+
+                <div class="highlight">
+                    📍 Day 1-4: 秋葉原酒店行李室 (免費)<br>
+                    📍 Day 5: 上野站寄存 → 購物 → 機場<br>
+                    📍 回香港: 7-11 寄包 / EMS / 行李箱轉運
+                </div>
+
+                <div class="info-box" style="background: #d1ecf1; border-left: 4px solid #0284c7;">
+                    <h3 style="margin-bottom: 10px;">✅ 酒店行李室 (最方便)</h3>
+                    📍 Hotel Resol Stay Akihabara | 💰 免費<br>
+                    ⏰ 24H 保管 | 🎒 28吋以下<br>
+                    <strong>使用步驟</strong>: Check-in告知 → 前台給行李牌 → 出門無負擔
+                </div>
+
+                <div class="info-box" style="background: #fff3cd; border-left: 4px solid #ffc107;">
+                    <h3 style="margin-bottom: 10px;">✅ 上野站 Coin Locker (推薦)</h3>
+                    📍 上野駅 B1F | 💰 ¥700-800<br>
+                    ⏰ 06:00-23:00 | <strong>優勢</strong>: 便宜、安全
+                </div>
+
+                <div class="info-box" style="background: #d1ecf1; border-left: 4px solid #0284c7;">
+                    <h3 style="margin-bottom: 10px;">❓ Ecbo Cloak (備選)</h3>
+                    📍 上野周邊店家 | 💰 ¥1,000-1,500<br>
+                    ⏰ 08:00-20:00<br>
+                    <a href="https://www.ecbo.io/" class="link-btn" target="_blank">🎫 Ecbo App</a>
+                </div>
+
+                <div style="background: #e7f3ff; padding: 15px; border-radius: 6px; margin-top: 20px;">
+                    <h3 style="margin-bottom: 12px; color: #0c3a5e;">✅ 打包建議</h3>
+                    <strong>必帶</strong>: 護照 | 機票 | 信用卡 | 手機 | 常用藥<br>
+                    <strong>衣著</strong>: 羽絨外套 | 毛衣 x3 | 長褲 x3-4 | 運動鞋<br>
+                    <strong>重點</strong>: 留 50% 行李空位給購物！
+                </div>
+
+                <div class="highlight" style="margin-top: 20px;">
+                    ✈️ 回香港 寄包/行李轉運完整攻略
+                </div>
+
+                <div class="info-box" style="background: #fff3cd; border-left: 4px solid #ffc107; margin-top: 15px;">
+                    <h3 style="margin-bottom: 10px;">方案 A: 便利店寄包 (推薦 + 最便宜 ✅)</h3>
+                    <strong>7-11 / Yamato Transport</strong><br>
+                    📍 地點: 成田機場所有 7-11 都可寄<br>
+                    💰 費用: ¥2,000-3,500 (按大小和目的地)<br>
+                    ⏰ 時間: 2-3 天送到香港<br>
+                    📦 限制: 28吋行李箱可寄<br>
+                    <br>
+                    <strong>步驟</strong>:
+                    <ol style="margin: 10px 0 10px 20px;">
+                        <li>機場 7-11 找 Yamato Transport 櫃台</li>
+                        <li>填表 (有中文幫助): 寄件人、收件人地址 + 電話</li>
+                        <li>稱重 + 計價</li>
+                        <li>付現金或 IC 卡均可</li>
+                        <li>領收據 (記住追蹤號)</li>
+                    </ol>
+                    ⚠️ 注意: 液體/貴重物品不可寄，檢查行李內容！
+                </div>
+
+                <div class="info-box" style="background: #e0f2fe; border-left: 4px solid #0284c7; margin-top: 15px;">
+                    <h3 style="margin-bottom: 10px;">方案 B: 黑貓宅急便 (最可靠)</h3>
+                    <strong>Yamato 黑貓宅急便</strong><br>
+                    💰 費用: ¥3,000-5,000 (海外運費較高)<br>
+                    ⏰ 時間: 3-5 天 (国際配送)<br>
+                    📦 大小限制: 無限制 (超大行李也可)<br>
+                    <br>
+                    <strong>優勢</strong>:
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li>✅ 保險覆蓋 (損壞賠償)</li>
+                        <li>✅ 海外運送經驗豐富</li>
+                        <li>✅ 追蹤系統完善</li>
+                        <li>✅ 可在線查詢進度</li>
+                    </ul>
+                    💻 官網: yamato-hk.com
+                </div>
+
+                <div class="info-box" style="background: #d1ecf1; border-left: 4px solid #0284c7; margin-top: 15px;">
+                    <h3 style="margin-bottom: 10px;">方案 C: EMS (郵局快遞)</h3>
+                    <strong>Japan Post EMS</strong><br>
+                    📍 地點: 成田機場郵局 (Terminal 1 & 2)<li>
+                    💰 費用: ¥3,500-6,000 (按重量)<br>
+                    ⏰ 時間: 5-7 天送到香港<br>
+                    <br>
+                    <strong>特點</strong>:
+                    <ul style="margin: 10px 0 10px 20px;">
+                        <li>政府郵局 (最安全)</li>
+                        <li>國際信譽好</li>
+                        <li>可寄液體/貴重物品 (額外申報)</li>
+                        <li>速度較慢但穩定</li>
+                    </ul>
+                </div>
+
+                <div class="info-box" style="background: #f8d7da; border-left: 4px solid #dc3545; margin-top: 15px;">
+                    <h3 style="margin-bottom: 10px;">⚠️ 常見狀況 + 對策</h3>
+                    <strong>Q: 行李爆滿怎辦?</strong><br>
+                    A: 可在機場買空行李箱 (¥3,000-5,000) 再寄一件<br>
+                    <br>
+                    <strong>Q: 如果手信超重?</strong><br>
+                    A: 分兩個寄件 (例: ¥1,500 x2 比 ¥3,500 便宜)<br>
+                    <br>
+                    <strong>Q: 寄包丟失或損壞?</strong><br>
+                    A: Yamato 有保險，保留收據 + 追蹤號，可申請理賠<br>
+                    <br>
+                    <strong>Q: 什麼不能寄?</strong><br>
+                    ❌ 液體 (香水/護膚品 - 除非特殊申報)<br>
+                    ❌ 充電器/電池 (危險品)<br>
+                    ❌ 食品 (某些受限)<br>
+                    ✅ 衣服、電子產品、化妝品通常 OK
+                </div>
+
+                <div style="background: #e7f3ff; padding: 15px; border-radius: 6px; margin-top: 20px;">
+                    <h3 style="margin-bottom: 12px; color: #0c3a5e;">💡 回香港方案推薦排名</h3>
+                    <strong style="color: #2180a0; font-size: 1.1em;">🥇 第一推薦: 7-11 Yamato (便宜 + 快速)</strong><br>
+                    便利性 ⭐⭐⭐⭐⭐ | 價格 ⭐⭐⭐⭐⭐ | 速度 ⭐⭐⭐⭐<br>
+                    <em>最適合: 行李不超 28吋、沒有液體、預算有限</em><br>
+                    <br>
+                    <strong style="color: #2180a0; font-size: 1.1em;">🥈 第二推薦: Yamato 黑貓 (最安心)</strong><br>
+                    便利性 ⭐⭐⭐⭐ | 價格 ⭐⭐⭐ | 速度 ⭐⭐⭐⭐<br>
+                    <em>最適合: 行李超大、有貴重物品、願意多花錢換安心</em><br>
+                    <br>
+                    <strong style="color: #2180a0; font-size: 1.1em;">🥉 第三選擇: EMS (官方保障)</strong><br>
+                    便利性 ⭐⭐⭐ | 價格 ⭐⭐ | 速度 ⭐⭐⭐<br>
+                    <em>最適合: 有液體/化妝品、想用官方郵局、不趕時間</em>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🎉 <strong>祝 Hazel 生日快樂！</strong></p>
+        <p>✨ 5天東京魔法之旅 | 充滿回憶的完美行程</p>
+        <p style="margin-top: 15px; opacity: 0.9;">包含: 詳細交通攻略 + 購票指南 + 行李寄存</p>
+        <p style="font-size: 0.85em; margin-top: 10px; opacity: 0.7;">最後更新: Dec 7, 2025</p>
+        <button class="download-btn" onclick="downloadHTML()">⬇️ 下載為 HTML 檔案</button>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+            window.scrollTo(0, 0);
+        }
+
+        function switchPerson(e, contentId) {
+            e.preventDefault();
+            const btn = e.target;
+            const container = btn.parentElement;
+            container.querySelectorAll('.person-tab').forEach(t => t.classList.remove('active'));
+            container.parentElement.querySelectorAll('.person-content').forEach(c => c.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById(contentId).classList.add('active');
+        }
+
+        function toggleDayRoute(e, routeId) {
+            e.preventDefault();
+            const btn = e.target;
+            const routeElement = document.getElementById(routeId);
+            
+            // 關閉其他路線
+            document.querySelectorAll('.route-info').forEach(el => {
+                if (el.id !== routeId) el.style.display = 'none';
+            });
+            document.querySelectorAll('.map-btn').forEach(b => {
+                if (b !== btn) b.classList.remove('active');
+            });
+            
+            // 切換當前路線
+            if (routeElement.style.display === 'none') {
+                routeElement.style.display = 'block';
+                btn.classList.add('active');
+            } else {
+                routeElement.style.display = 'none';
+                btn.classList.remove('active');
+            }
+        }
+
+        function downloadHTML() {
+            const html = document.documentElement.outerHTML;
+            const blob = new Blob([html], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'Hazel_Tokyo_Trip_Guide.html';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
